@@ -1,6 +1,7 @@
 package ru.netology.Cucumber.page;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.SetValueOptions;
 import ru.netology.Cucumber.data.DataHelper;
 
 import java.time.Duration;
@@ -9,6 +10,8 @@ import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static ru.netology.Cucumber.data.DataHelper.*;
+
 
 public class TransferPage {
     private final SelenideElement transferButton = $("[data-test-id='action-transfer']");
@@ -22,6 +25,7 @@ public class TransferPage {
 
     private final SelenideElement cancel = $("[data-test-id='action-cancel']");
 
+    private static DashboardPage dashboardPage;
 
     public TransferPage() {
         transferHead.shouldBe(visible);
@@ -32,6 +36,7 @@ public class TransferPage {
         fromInput.setValue(cardInfo.getCardNumber());
         transferButton.click();
     }
+
 
     public DashboardPage makeValidTransfer(String amountToTransfer, DataHelper.CardInfo cardInfo) {
         makeTransfer(amountToTransfer, cardInfo);
@@ -49,5 +54,15 @@ public class TransferPage {
     public void findCancel() {
         cancel.click();
     }
+
+    public void transferFromSecondToFirst(String amount, DataHelper.CardInfo cardInfo) {
+        dashboardPage.verifyIsDashboardPage();
+        depositButton.click();
+        amountInputNew.setValue(amount);
+        fromInput.setValue(cardInfo.getCardNumber());
+        transferButton.click();
+    }
+
+
 }
 

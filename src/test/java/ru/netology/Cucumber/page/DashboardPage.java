@@ -33,7 +33,14 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
+    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
+        cards.findBy(attribute("data-test-id", cardInfo.getTestId())).$("button").click();
+        return new TransferPage();
+    }
+
     public void verifyIsDashboardPage() {
     }
+
+
 }
 
