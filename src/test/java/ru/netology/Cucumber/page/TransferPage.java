@@ -6,8 +6,7 @@ import ru.netology.Cucumber.data.DataHelper;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static ru.netology.Cucumber.data.DataHelper.*;
@@ -55,14 +54,14 @@ public class TransferPage {
         cancel.click();
     }
 
-    public void transferFromSecondToFirst(String amount, DataHelper.CardInfo cardInfo) {
-        dashboardPage.verifyIsDashboardPage();
-        depositButton.click();
-        amountInputNew.setValue(amount);
-        fromInput.setValue(cardInfo.getCardNumber());
+    public void makeTrans(String amountToTransfer, String cardNumber) throws InterruptedException {
+        amountInputNew.isSelected();
+        amountInputNew.setValue(amountToTransfer);
+        Thread.sleep(3000);
+        //      cardNumber = DataHelper.getFirstCardInfo().getCardNumber();
+        fromInput.setValue(cardNumber);
         transferButton.click();
     }
-
 
 }
 

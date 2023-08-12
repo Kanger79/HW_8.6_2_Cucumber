@@ -44,14 +44,31 @@ public class TemplateSteps {
         verificationPage.verifyCodeIsInvalid();
     }
 
-    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою первую карту")
-    public void makeTransferTo(String amountToTransfer, DataHelper.CardInfo cardInfo) {
-        transferPage.transferFromSecondToFirst(amountToTransfer, DataHelper.getSecondCardInfo());
-//        DataHelper.getFirstCardInfo();
+//    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою первую карту")
+//    public void makeTransferTo(String amountToTransfer, DataHelper.CardInfo cardInfo) {
+//        transferPage.transferFromSecondToFirst(amountToTransfer, DataHelper.getSecondCardInfo());
+////        DataHelper.getFirstCardInfo();
+//    }
+
+//    @Пусть("пользователь заходит на страницу пополнения карты {string}")
+//    public void goTransferPage(DataHelper.CardInfo getCardNumber) {
+//        dashboardPage.selectCardToTransfer(getCardNumber);
+//
+//        System.out.println("Card number: " + getCardNumber);
+//    }
+
+
+    @Пусть("пользователь заходит на страницу пополнения карты с номером {int}")
+    public void goTransferPage(int index) throws InterruptedException {
+        dashboardPage.selectCardToTransfer(index);
+        Thread.sleep(3000);
     }
 
-    @Пусть("пользователь заходит на страницу пополнения карты {string}")
-    public void goTransferPage(DataHelper.CardInfo cardInfo) {
-        dashboardPage.selectCardToTransfer(cardInfo);
+    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою первую карту")
+    public void makeTrans(String amountToTransfer, String cardNumber) throws InterruptedException {
+
+        transferPage.makeTrans("5000", "5559 0000 0000 0002");
+        Thread.sleep(5000);
     }
 }
+

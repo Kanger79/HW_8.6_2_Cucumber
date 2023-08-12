@@ -1,8 +1,11 @@
 package ru.netology.Cucumber.data;
 
 import lombok.Value;
+import ru.netology.Cucumber.page.TransferPage;
 
 import java.util.Random;
+
+import static com.codeborne.selenide.Condition.attribute;
 
 public class DataHelper {
     private DataHelper() {
@@ -32,6 +35,7 @@ public class DataHelper {
         return Math.abs(balance) + new Random().nextInt(10000);
     }
 
+
     @Value
     public static class VerificationCode {
         String code;
@@ -41,12 +45,18 @@ public class DataHelper {
     public static class CardInfo {
         String cardNumber;
         String testId;
+
+        public String getCardNumber() {
+            return cardNumber;
+        }
     }
+
 
     @Value
     public static class AuthInfo {
         String login;
         String password;
     }
+
 
 }

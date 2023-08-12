@@ -5,8 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.Cucumber.data.DataHelper;
 
-import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -21,10 +20,11 @@ public class DashboardPage {
         heading.shouldBe(visible);
     }
 
-    public int getCardBalance(DataHelper.CardInfo cardInfo) {
-        var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
-        return extractBalance(text);
-    }
+//    public int getCardBalance(DataHelper.CardInfo cardInfo) {
+//        var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
+//        return extractBalance(text);
+//    }
+
 
     private int extractBalance(String text) {
         var start = text.indexOf(balanceStart);
@@ -33,9 +33,11 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
-        cards.findBy(attribute("data-test-id", cardInfo.getTestId())).$("button").click();
+    public TransferPage selectCardToTransfer(int index) {
+        cards.get(index);
+        $("button").click();
         return new TransferPage();
+
     }
 
     public void verifyIsDashboardPage() {
