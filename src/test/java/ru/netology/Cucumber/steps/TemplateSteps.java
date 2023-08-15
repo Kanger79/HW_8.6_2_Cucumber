@@ -5,7 +5,6 @@ import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Пусть;
 import io.cucumber.java.ru.Тогда;
-import ru.netology.Cucumber.data.DataHelper;
 import ru.netology.Cucumber.page.DashboardPage;
 import ru.netology.Cucumber.page.LoginPage;
 import ru.netology.Cucumber.page.TransferPage;
@@ -16,7 +15,6 @@ public class TemplateSteps {
     private static LoginPage loginPage;
     private static DashboardPage dashboardPage;
     private static VerificationPage verificationPage;
-    private static TransferPage transferPage;
 
 
     @Пусть("открыта страница с формой авторизации {string}")
@@ -44,31 +42,20 @@ public class TemplateSteps {
         verificationPage.verifyCodeIsInvalid();
     }
 
-//    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою первую карту")
-//    public void makeTransferTo(String amountToTransfer, DataHelper.CardInfo cardInfo) {
-//        transferPage.transferFromSecondToFirst(amountToTransfer, DataHelper.getSecondCardInfo());
-////        DataHelper.getFirstCardInfo();
-//    }
-
-//    @Пусть("пользователь заходит на страницу пополнения карты {string}")
-//    public void goTransferPage(DataHelper.CardInfo getCardNumber) {
-//        dashboardPage.selectCardToTransfer(getCardNumber);
-//
-//        System.out.println("Card number: " + getCardNumber);
-//    }
-
 
     @Пусть("пользователь заходит на страницу пополнения карты с номером {int}")
-    public void goTransferPage(int index) throws InterruptedException {
-        dashboardPage.selectCardToTransfer(index);
-        Thread.sleep(3000);
+    public void goTransferPage(int index) {
+        dashboardPage.selectCard(index);
     }
 
-    @Когда("пользователь переводит {string} рублей с карты с номером {string} на свою первую карту")
-    public void makeTrans(String amountToTransfer, String cardNumber) throws InterruptedException {
+    @Когда("пользователь переводит {int} рублей с карты с номером {string} на свою первую карту")
+    public static void makeTransfer(int amountToTransfer, String cardNumber) {
+        TransferPage.makeTransfer(amountToTransfer, cardNumber);
+    }
 
-        transferPage.makeTrans("5000", "5559 0000 0000 0002");
-        Thread.sleep(5000);
+    @Тогда("баланс его первой карты из списка на главной странице должен стать равен {int} рублей")
+    public void verify(int remains) {
+        dashboardPage = new DashboardPage();
+        DashboardPage.verifyBalance(remains);
     }
 }
-

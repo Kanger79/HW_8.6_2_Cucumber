@@ -1,7 +1,6 @@
 package ru.netology.Cucumber.page;
 
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.Cucumber.data.DataHelper;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -26,4 +25,5 @@ public class VerificationPage {
     public void verifyCodeIsInvalid() {
         errorPopup.shouldHave(text("Неверно указан код! Попробуйте ещё раз."));
     }
+
 }

@@ -8,41 +8,49 @@ import ru.netology.Cucumber.data.DataHelper;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.netology.Cucumber.data.DataHelper.*;
 
 public class DashboardPage {
 
-    private final String balanceStart = "баланс: ";
-    private final String balanceFinish = " р.";
+    private static final String balanceStart = "баланс: ";
+    private static final String balanceFinish = " р.";
     private final SelenideElement heading = $("[data-test-id=dashboard]");
-    private final ElementsCollection cards = $$(".list__item div");
+    private static final ElementsCollection cards = $$(".list__item div");
 
     public DashboardPage() {
         heading.shouldBe(visible);
     }
 
-//    public int getCardBalance(DataHelper.CardInfo cardInfo) {
-//        var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
-//        return extractBalance(text);
-//    }
+    public static int getCardBalance(DataHelper.CardInfo cardInfo) {
+        var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
+        return extractBalance(text);
+    }
 
 
-    private int extractBalance(String text) {
+    private static int extractBalance(String text) {
         var start = text.indexOf(balanceStart);
         var finish = text.indexOf(balanceFinish);
         var value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
     }
 
-    public TransferPage selectCardToTransfer(int index) {
+    public void selectCard(int index) {
         cards.get(index);
         $("button").click();
-        return new TransferPage();
+        new TransferPage();
 
     }
 
     public void verifyIsDashboardPage() {
     }
 
+    public static void verifyBalance(int remains) {
+        var firstCardInfo = getFirstCardInfo();
+        var actualBalanceFirstCard = getCardBalance(firstCardInfo);
+        assertEquals(remains, actualBalanceFirstCard);
+
+    }
 
 }
 
