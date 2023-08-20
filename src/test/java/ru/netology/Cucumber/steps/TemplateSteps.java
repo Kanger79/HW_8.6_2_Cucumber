@@ -21,6 +21,25 @@ public class TemplateSteps {
     private static DashboardPage dashboardPage;
     private static VerificationPage verificationPage;
 
+    private int firstCardBalanceBefore;
+    private int secondCardBalanceBefore;
+
+    public void setFirstCardBalanceBefore(int firstCardBalanceBefore) {
+        this.firstCardBalanceBefore = dashboardPage.getCardBalance(getFirstCardInfo());
+    }
+
+    public int getFirstCardBalanceBefore() {
+        return firstCardBalanceBefore;
+    }
+
+    public void setSecondCardBalanceBefore(int secondCardBalanceBefore) {
+        this.secondCardBalanceBefore = dashboardPage.getCardBalance(getSecondCardInfo());
+    }
+
+    public int getSecondCardBalanceBefore() {
+        return secondCardBalanceBefore;
+    }
+
 
     @Пусть("открыта страница с формой авторизации {string}")
     public void openAuthPage(String url) {
@@ -40,6 +59,10 @@ public class TemplateSteps {
     @Тогда("происходит успешная авторизация и пользователь попадает на страницу 'Личный кабинет'")
     public void verifyDashboardPage() {
         dashboardPage = new DashboardPage();
+        setFirstCardBalanceBefore(getFirstCardBalanceBefore());
+        setSecondCardBalanceBefore(getSecondCardBalanceBefore());
+        System.out.println("firstCardBalanceBefore = " + getFirstCardBalanceBefore());
+        System.out.println("secondCardBalanceBefore = " + getSecondCardBalanceBefore());
     }
 
     @Тогда("появляется ошибка о неверном коде проверки")
@@ -64,10 +87,11 @@ public class TemplateSteps {
     @Тогда("баланс пополняемой карты должен стать больше на {int} рублей")
     public void verifyBalance(int amount) {
         dashboardPage = new DashboardPage();
-        dashboardPage.getCardBalance(getFirstCardInfo());
-        dashboardPage.getCardBalance(getSecondCardInfo());
-        assertEquals(dashboardPage.firstCardBalanceBefore + amount, dashboardPage.getCardBalance(getFirstCardInfo()));
-        assertEquals(dashboardPage.secondCardBalanceBefore - amount, dashboardPage.getCardBalance(getSecondCardInfo()));
-
+        int firstCardBalance = dashboardPage.getCardBalance(getFirstCardInfo());
+        int secondCardBalance = dashboardPage.getCardBalance(getSecondCardInfo());
+        assertEquals(firstCardBalanceBefore + amount, firstCardBalance);
+        assertEquals(secondCardBalanceBefore - amount, secondCardBalance);
+        System.out.println("firstCardBalance = " + dashboardPage.getCardBalance(getFirstCardInfo()));
+        System.out.println("secondCardBalance = " + dashboardPage.getCardBalance(getSecondCardInfo()));
     }
 }

@@ -21,8 +21,6 @@ public class DashboardPage {
         heading.shouldBe(visible);
     }
 
-    public int firstCardBalanceBefore = 10000;
-    public int secondCardBalanceBefore = 10000;
 
     public int getCardBalance(DataHelper.CardInfo cardInfo) {
         var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
