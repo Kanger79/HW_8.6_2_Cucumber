@@ -1,14 +1,12 @@
 package ru.netology.Cucumber.page;
 
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.Cucumber.data.DataHelper;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-
 
 public class TransferPage {
     private final SelenideElement transferButton = $("[data-test-id='action-transfer']");

@@ -37,7 +37,6 @@ public class DashboardPage {
     public void selectCard(int index) {
         cards.get(index - 1).$("button").click();
         new TransferPage();
-
     }
 }
 
